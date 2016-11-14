@@ -13,7 +13,7 @@ class NNImpl {
 private:
     std::vector<Node> inputNodes;//list of the output layer nodes.
     std::vector<Node> hiddenNodes;//list of the hidden layer nodes
-    std::Vector<Node> outputNodes;// list of the output layer nodes
+    std::vector<Node> outputNodes;// list of the output layer nodes
 
     std::vector<Instance> trainingSet;//the training set
     double learningRate = 1.0; // variable to store the learning rate
@@ -37,8 +37,8 @@ public:
            int hiddenNodeCount,
            double learningRate,
            int maxEpoch,
-           vector<vector<double>> hiddenWeights,
-           vector<vector<double>> outputWeights);
+           std::vector<std::vector<double>> hiddenWeights,
+           std::vector<std::vector<double>> outputWeights);
 
     /**
     * Get the output from the neural network for a single instance

@@ -6,10 +6,10 @@
 #include <string>
 #include <vector>
 
-#include "Instance.hpp"
 #include "Node.hpp"
 #include "NodeWeightPair.hpp"
-
+#include "Instance.hpp"
+#include "NNImpl.hpp"
 
 
 std::vector<Instance> getData(char*);
@@ -20,31 +20,31 @@ int main(int argc, char *argv[]) {
     double startTime = std::time(0);
     double timeTaken;
     //Checking for correct number of arguments
-    if (argsc < 5) {
+    if (argc < 5) {
         std::cout << "USAGE: " << argv[0] << " <noHiddenNode> ";
         std::cout << "<learningRate> <maxEpoch> <trainFile> <testFile>";
         std::exit(-1);
     }
 
     //Reading the training set
-    std::vector<Instance> trainingSet = getData(args[3]);
+    std::vector<Instance> trainingSet = getData(argv[3]);
 
     //Reading the weights
     std::vector<std::vector<double>> hiddenWeights;
-    hiddenWeights.resize(std::atoi(args[0]));
-    for(int i = 0; i < hiddenWeights.length; i++) {
-        hiddenWeights[i].resize(trainingSet[0].getAttributes.size()+1);
+    hiddenWeights.resize(std::atoi(argv[0]));
+    for(int i = 0; i < hiddenWeights.size(); i++) {
+        hiddenWeights[i].resize(trainingSet[0].getAttributes().size()+1);
     }
 
     std::vector<std::vector<double>> outputWeights;
-    outputWeights.resize(trainingSet[0].getClassValues.size());
-    for (int i=0; i<outputWeights.length; i++) {
-        outputWeights[i].resize(hiddenWeights.length+1);
+    outputWeights.resize(trainingSet[0].getClassValues().size());
+    for (int i = 0; i < outputWeights.size(); i++) {
+        outputWeights[i].resize(hiddenWeights.size() + 1);
     }
 
     readWeights(hiddenWeights,outputWeights);
 
-    istringstream ss(args[1]);
+    std::istringstream ss(argv[1]);
     double learningRate;
     ss >> learningRate;
 
@@ -55,22 +55,22 @@ int main(int argc, char *argv[]) {
         std::exit(-1);
     }
 
-    NNImpl nn(trainingSet, atoi(args[0]), learningRate,atoi(args[2]),
+    NNImpl nn(trainingSet, atoi(argv[0]), learningRate,atoi(argv[2]),
               hiddenWeights,outputWeights);
     nn.train();
 
     //Reading the training set
-    std::vector<Instance> testSet = getData(args[4]);
+    std::vector<Instance> testSet = getData(argv[4]);
 
-    Integer outputs[testSet.size()];
+    int outputs[testSet.size()];
 
 
-    int correct=0;
+    int correct = 0;
     for (int i = 0; i < testSet.size(); i++) {
         //Getting output from network
         outputs[i] = nn.calculateOutputForInstance(testSet[i]);
         int actual_idx =- 1;
-        for (int j = 0; j < testSet[i].getGlassValues.size(); j++) {
+        for (int j = 0; j < testSet[i].getClassValues().size(); j++) {
             if (testSet[i].getClassValues()[j] > 0.5) {
                 actual_idx = j;
             }
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
             correct++;
         } else {
             std::cout << i << "th instance got an misclassification, ";
-            std::cout << "expected: " + actual_idx + ". But actual:";
+            std::cout << "expected: " << actual_idx << ". But actual:";
             std::cout << outputs[i] << std::endl;
         }
     }
@@ -101,8 +101,8 @@ std::vector<Instance> getData(char* file) {
     try{
         std::ifstream inFile(file);
         if (!inFile.is_open()) {
-            std::cerr << "Input file " << argv[1] << " cannot be opened!" << std::endl;
-            return 1;
+            std::cerr << "Input file " << file << " cannot be opened!" << std::endl;
+            std::exit(1);
         }
 
         std::string line, prefix, token;
@@ -116,9 +116,9 @@ std::vector<Instance> getData(char* file) {
             prefix = line.substr(0, 2);
             if (!prefix.compare("//")) {
             } else if (!prefix.compare("##")) {
-                attributeCount = std::stoi(line.substring(2, line.length()));
+                attributeCount = std::stoi(line.substr(2, line.length()));
             } else if (!prefix.compare("**")) {
-                outputCount = std::stoi(line.substring(2, line.length()));
+                outputCount = std::stoi(line.substr(2, line.length()));
             } else {
                 // Split by space
                 std::istringstream ss(line);
@@ -132,18 +132,18 @@ std::vector<Instance> getData(char* file) {
                 for (int i = 0; i < attributeCount; i++) {
                     instance.addAttribute(std::stod(vals[i]));
                 }
-                for (int i=attributeCount; i < vals.length; i++) {
+                for (int i=attributeCount; i < vals.size(); i++) {
                     instance.addClassValue(std::stoi(vals[i]));
                 }
-                data.add(inst);
+                data.push_back(instance);
             }
         }
         inFile.close();
         return data;
-    }catch(exception& e) {
+    }catch(std::exception& e) {
         std::cout << "Could not read instances: " << e.what() << std::endl;
     }
-    return null;
+    return NULL;
 }
 
 // Assigns random weights in the vectors passed as parameters
@@ -151,14 +151,14 @@ void readWeights(std::vector<std::vector<double>> &hiddenWeights,
                  std::vector<std::vector<double>> &outputWeights) {
 //    Random r = new Random();
     int i, j;
-    for (i = 0; i < hiddenWeights.length; i++) {
-        for (j = 0; j < hiddenWeights[i].length; j++) {
+    for (i = 0; i < hiddenWeights.size(); i++) {
+        for (j = 0; j < hiddenWeights[i].size(); j++) {
             hiddenWeights[i][j] = std::rand() * 0.01;
         }
     }
 
-    for (i = 0; i < outputWeights.length; i++) {
-        for (j = 0; j < outputWeights[i].length; j++) {
+    for (i = 0; i < outputWeights.size(); i++) {
+        for (j = 0; j < outputWeights[i].size(); j++) {
             outputWeights[i][j] = std::rand() * 0.01;
         }
     }

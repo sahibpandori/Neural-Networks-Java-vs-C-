@@ -21,6 +21,13 @@ public:
      *
      * @return weight of this NodeWeightPair
      */
-    long getWeight();
+    double getWeight();
+
+    /**
+    * Adds more weight(in parameter) to the current value of weight
+    *
+    * @param weight : the weight to be added
+    */
+    void NodeWeightPair::addWeight(double weight);
 };
 #endif //NEURAL_NETWORKS_JAVA_VS_C_NODEWEIGHTPAIR_HPP

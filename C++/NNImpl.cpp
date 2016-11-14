@@ -11,14 +11,14 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
                int hiddenNodeCount,
                double learningRate,
                int maxEpoch,
-               double hiddenWeights[][],
-               double outputWeights[][]) {
+               std::vector<std::vector<double>> hiddenWeights,
+               std::vector<std::vector<double>> outputWeights) {
     NNImpl::trainingSet = trainingSet;
     NNImpl::learningRate = learningRate;
     NNImpl::maxEpoch = maxEpoch;
 
-    int inputNodeCount = NNImpl::trainingSet[i].getAttribues().size();
-    int outputNodeCount = NNImpl::trainingSet[i].getClassValues().size();
+    int inputNodeCount = NNImpl::trainingSet[0].getAttribues().size();
+    int outputNodeCount = NNImpl::trainingSet[0].getClassValues().size();
     int i, j, k;
     for (i = 0; i < inputNodeCount; i++) {
         Node node(0);
@@ -45,7 +45,7 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
     NNImpl::hiddenNodes.push_back(biasToOutput);
 
     //Output node layer
-    for (i = 0; i < NNImpl::outputNodeCount; i++) {
+    for (i = 0; i < outputNodeCount; i++) {
         Node node(4);
         //Connecting output layer nodes with hidden layer nodes
         for (j = 0; j < NNImpl::hiddenNodes.size(); j++) {
@@ -77,7 +77,7 @@ int NNImpl::calculateOutputForInstance(Instance instance) {
 
     for (i = 1; i < NNImpl::outputNodes.size(); i++) {
         if(NNImpl::outputNodes[i].getOutput() > maxOutput) {
-            maxOutput = outputNodes.get(i).getOutput();
+            maxOutput = NNImpl::outputNodes[i].getOutput();
             classification = i;
         }
     }
@@ -97,7 +97,7 @@ void NNImpl::train() {
 
             double error[outputNodes.size()];
 
-            for (j = 0; j < error.length; j++) {
+            for (j = 0; j < outputNodes.size(); j++) {
                 if(NNImpl::outputNodes[j].getSum() >= 0) {
                     error[j] = (instance.getClassValues()[j] -
                                 NNImpl::outputNodes[j].getOutput());// * outputNodes.get(j).getSum();
@@ -140,13 +140,13 @@ void NNImpl::train() {
             //Updating all the weights
             for (j  = 0; j < NNImpl::hiddenNodes.size(); j++) {
                 for (k = 0; k < NNImpl::outputNodes.size(); k++) {
-                    NNImpl::outputNodes[k].getParentAt(j).getWeight() += errorOutput[j][k];
+                    NNImpl::outputNodes[k].getParentAt(j).addWeight(errorOutput[j][k]);
                 }
             }
 
             for (j = 0; j < NNImpl::inputNodes.size(); j++) {
                 for (k = 0; k < NNImpl::hiddenNodes.size() - 1; k++) {
-                    hiddenNodes.get(k).getParentAt[j].getWeight += errorHidden[j][k];
+                    hiddenNodes[k].getParentAt(j).addWeight(errorHidden[j][k]);
                 }
             }
         }

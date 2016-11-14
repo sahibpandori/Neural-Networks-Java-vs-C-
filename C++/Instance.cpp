@@ -7,21 +7,21 @@
  * instance has class 1.
  * Do not modify
  */
-
+#include <vector>
 #include "Instance.hpp"
 
 void Instance::addAttribute(double attribute) {
-    Instance::attributes.push_back(attributes);
+    Instance::attributes.push_back(attribute);
 }
 
 void Instance::addClassValue(int classValue) {
     Instance::classValues.push_back(classValue);
 }
 
-std::vector Instance::getAttributes() {
+std::vector<double> Instance::getAttributes() {
     return Instance::attributes;
 }
 
-std::vector Instance::getClassValues() {
+std::vector<int> Instance::getClassValues() {
     return Instance::classValues;
 }
