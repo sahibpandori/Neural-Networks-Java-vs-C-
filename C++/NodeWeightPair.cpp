@@ -1,14 +1,13 @@
 /**
  * Class to identfiy connections between different layers.
  */
+#include "NodeWeightPair.hpp"
 
-public class NodeWeightPair{
-    public Node node; //The parent node
-    public double weight; //Weight of this connection
+NodeWeightPair::NodeWeightPair(Node node, double weight)  {
+    NodeWeightPair::node = node;
+    NodeWeightPair::weight = weight;
+}
 
-    // Create an object with a given parent node and connect weight
-    public NodeWeightPair(Node node, double weight) {
-        NodeWeightPair::node = node;
-        NodeWeightPair::weight = weight;
-    }
+long NodeWeightPair::getWeight() {
+    return NodeWeightPair::weight;
 }

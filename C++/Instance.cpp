@@ -1,4 +1,4 @@
-#include <vector>
+
 /**
  * Holds data for a particular instance.
  * Attributes are represented as an ArrayList of Doubles
@@ -8,8 +8,20 @@
  * Do not modify
  */
 
+#include "Instance.hpp"
 
-class Instance{
-    public std::vector<double> attributes;
-    public std::vector<int> classValues;
+void Instance::addAttribute(double attribute) {
+    Instance::attributes.push_back(attributes);
+}
+
+void Instance::addClassValue(int classValue) {
+    Instance::classValues.push_back(classValue);
+}
+
+std::vector Instance::getAttributes() {
+    return Instance::attributes;
+}
+
+std::vector Instance::getClassValues() {
+    return Instance::classValues;
 }
