@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include "Node.hpp"
+#include "NodeWeightPair.hpp"
 
 Node(int type) {
     if(type < 0 || type > 4) {

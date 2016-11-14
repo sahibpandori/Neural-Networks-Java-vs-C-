@@ -32,14 +32,14 @@ public:
      *
      * @return athe attributes for this instance
      */
-    std::vector getAttributes();
+    std::vector<double> getAttributes();
 
     /**
      * Return the classValues field of this instance
      *
      * @return the class values for this instance
      */
-    std::vector getClassValues();
+    std::vector<int> getClassValues();
 };
 
 #endif //NEURAL_NETWORKS_JAVA_VS_C_INSTANCE_HPP

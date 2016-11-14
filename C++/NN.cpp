@@ -6,6 +6,12 @@
 #include <string>
 #include <vector>
 
+#include "Instance.hpp"
+#include "Node.hpp"
+#include "NodeWeightPair.hpp"
+
+
+
 std::vector<Instance> getData(char*);
 void readWeights(std::vector<std::vector<double>> &,
                  std::vector<std::vector<double>> &);
@@ -89,12 +95,10 @@ int main(int argc, char *argv[]) {
 // Reads a file and returns the list of instances read
 std::vector<Instance> getData(char* file) {
     std::vector<Instance> data;
-    BufferedReader in;
     int attributeCount = 0;
     int outputCount = 0;
 
     try{
-        in = new BufferedReader(new FileReader(file));
         std::ifstream inFile(file);
         if (!inFile.is_open()) {
             std::cerr << "Input file " << argv[1] << " cannot be opened!" << std::endl;

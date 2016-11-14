@@ -21,6 +21,6 @@ public:
      *
      * @return weight of this NodeWeightPair
      */
-    getWeight();
+    long getWeight();
 };
 #endif //NEURAL_NETWORKS_JAVA_VS_C_NODEWEIGHTPAIR_HPP
