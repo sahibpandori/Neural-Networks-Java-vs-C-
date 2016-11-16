@@ -143,7 +143,7 @@ std::vector<Instance> getData(char* file) {
     }catch(std::exception& e) {
         std::cout << "Could not read instances: " << e.what() << std::endl;
     }
-    return NULL;
+    return {};
 }
 
 // Assigns random weights in the vectors passed as parameters

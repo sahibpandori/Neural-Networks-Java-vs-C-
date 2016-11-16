@@ -17,7 +17,7 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
     NNImpl::learningRate = learningRate;
     NNImpl::maxEpoch = maxEpoch;
 
-    int inputNodeCount = NNImpl::trainingSet[0].getAttribues().size();
+    int inputNodeCount = NNImpl::trainingSet[0].getAttributes().size();
     int outputNodeCount = NNImpl::trainingSet[0].getClassValues().size();
     int i, j, k;
     for (i = 0; i < inputNodeCount; i++) {
@@ -34,7 +34,7 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
         Node node(2);
         //Connecting hidden layer nodes with input layer nodes
         for (j = 0; j < NNImpl::inputNodes.size();j++) {
-            NodeWeightPair nwp(NNImpl::inputNodes[j],hiddenWeights[i][j]);
+            NodeWeightPair nwp(NNImpl::inputNodes[j], hiddenWeights[i][j]);
             node.addParent(nwp);
         }
         NNImpl::hiddenNodes.push_back(node);

@@ -28,6 +28,6 @@ public:
     *
     * @param weight : the weight to be added
     */
-    void NodeWeightPair::addWeight(double weight);
+    void addWeight(double weight);
 };
 #endif //NEURAL_NETWORKS_JAVA_VS_C_NODEWEIGHTPAIR_HPP
