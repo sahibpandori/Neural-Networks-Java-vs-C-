@@ -22,13 +22,13 @@ Node(int type) {
     Node::sum = 0.0;
 }
 
-void setInput(double inputValue) {
+void Node::setInput(double inputValue) {
     if(Node::type == 0) {  //If input node
         Node::inputValue = inputValue;
     }
 }
 
-void calculateOutput() {
+void Node::calculateOutput() {
     if (Node::type == 2 || Node::type == 4) {  //Hidden or Output Node
         Node::sum = 0.0;
         for (int i = 0; i < Node::parents.size(); i++) {
@@ -46,18 +46,18 @@ void calculateOutput() {
     }
 }
 
-double getSum() {
+double Node::getSum() {
     Node::sum;
 }
 
-double getOutput() {
+double Node::getOutput() {
     return Node::outputValue;
 }
 
-void addParent(NodeWeightPair nodeWeightPair) {
+void Node::addParent(NodeWeightPair nodeWeightPair) {
     Node::parents.push_back(nodeWeightPair);
 }
 
-NodeWeightPair getParentAt(int index) {
-    return NodeWeightPair::parent[index];
+NodeWeightPair Node::getParentAt(int index) {
+    return Node::parent[index];
 }
