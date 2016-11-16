@@ -5,9 +5,8 @@
 
 #include <iostream>
 #include "Node.hpp"
-#include "NodeWeightPair.hpp"
 
-Node(int type) {
+Node::Node(int type) {
     if(type < 0 || type > 4) {
         std::cout << "Incorrect value for node type" << std::endl;
         std::exit(1);
@@ -15,7 +14,7 @@ Node(int type) {
         Node::type = type;
     }
     if (type == 0 || type == 1 || type == 3) {
-        Node::parents = null;
+        Node::parents = nullptr;
     }
     Node::inputValue = 0.0;
     Node::outputValue = 0.0;
@@ -32,7 +31,7 @@ void Node::calculateOutput() {
     if (Node::type == 2 || Node::type == 4) {  //Hidden or Output Node
         Node::sum = 0.0;
         for (int i = 0; i < Node::parents.size(); i++) {
-            Node::sum += Node::parents[i].weight * parents[i].node.getOutput();
+            Node::sum += Node::parents[i].getWeight() * parents[i].getNode().getOutput();
         }
         if (sum <= 0) {
             Node::outputValue = 0.0;
@@ -47,7 +46,7 @@ void Node::calculateOutput() {
 }
 
 double Node::getSum() {
-    Node::sum;
+    return Node::sum;
 }
 
 double Node::getOutput() {
@@ -59,5 +58,5 @@ void Node::addParent(NodeWeightPair nodeWeightPair) {
 }
 
 NodeWeightPair Node::getParentAt(int index) {
-    return Node::parent[index];
+    return Node::parents[index];
 }

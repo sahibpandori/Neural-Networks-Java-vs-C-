@@ -22,7 +22,7 @@ public:
     * Creates a node with the initial values. Exits after displaying an error
     * message if an invalid value is use for node type.
     *
-    * @param type : type of this node (value
+    * @param type : type of this node (value)
     */
     Node(int type);
 

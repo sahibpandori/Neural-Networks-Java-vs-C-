@@ -9,7 +9,7 @@
 
 class NodeWeightPair{
 private:
-    Node node; //The parent node
+    Node node = Node(0); //The parent node
     double weight; //Weight of this connection
 
     // Create an object with a given parent node and connect weight
@@ -29,5 +29,12 @@ public:
     * @param weight : the weight to be added
     */
     void addWeight(double weight);
+
+    /**
+     * Return thr node of this NodeWeightPair
+     *
+     * @return node of this NodeWeightPair
+     */
+    Node getNode();
 };
 #endif //NEURAL_NETWORKS_JAVA_VS_C_NODEWEIGHTPAIR_HPP
