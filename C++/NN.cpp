@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 
     //Reading the weights
     std::vector<std::vector<double>> hiddenWeights;
-    hiddenWeights.resize((unsigned) std::atoi(argv[0]));
+    hiddenWeights.resize((unsigned) std::atoi(argv[1]));
     for(int i = 0; i < hiddenWeights.size(); i++) {
         hiddenWeights[i].resize(trainingSet[0].getAttributes().size()+1);
     }
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 
     readWeights(hiddenWeights,outputWeights);
 
-    std::istringstream ss(argv[1]);
+    std::istringstream ss(argv[2]);
     double learningRate;
     ss >> learningRate;
 
