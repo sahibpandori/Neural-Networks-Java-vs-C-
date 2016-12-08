@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include "Node.hpp"
 #include "NodeWeightPair.hpp"
@@ -12,7 +13,7 @@
 #include "NNImpl.hpp"
 
 
-std::vector<Instance> getData(char*);
+std::vector<Instance> getData(std::string);
 void readWeights(std::vector<std::vector<double>> &,
                  std::vector<std::vector<double>> &);
 
@@ -20,18 +21,18 @@ int main(int argc, char *argv[]) {
     double startTime = std::time(0);
     double timeTaken;
     //Checking for correct number of arguments
-    if (argc < 5) {
+    if (argc < 6) {
         std::cout << "USAGE: " << argv[0] << " <noHiddenNode> ";
         std::cout << "<learningRate> <maxEpoch> <trainFile> <testFile>";
         std::exit(-1);
     }
 
     //Reading the training set
-    std::vector<Instance> trainingSet = getData(argv[3]);
+    std::vector<Instance> trainingSet = getData(std::string(argv[4]));
 
     //Reading the weights
     std::vector<std::vector<double>> hiddenWeights;
-    hiddenWeights.resize(std::atoi(argv[0]));
+    hiddenWeights.resize((unsigned) std::atoi(argv[0]));
     for(int i = 0; i < hiddenWeights.size(); i++) {
         hiddenWeights[i].resize(trainingSet[0].getAttributes().size()+1);
     }
@@ -60,7 +61,7 @@ int main(int argc, char *argv[]) {
     nn.train();
 
     //Reading the training set
-    std::vector<Instance> testSet = getData(argv[4]);
+    std::vector<Instance> testSet = getData(std::string(argv[5]));
 
     int outputs[testSet.size()];
 
@@ -93,13 +94,13 @@ int main(int argc, char *argv[]) {
 }
 
 // Reads a file and returns the list of instances read
-std::vector<Instance> getData(char* file) {
+std::vector<Instance> getData(std::string file) {
     std::vector<Instance> data;
     int attributeCount = 0;
     int outputCount = 0;
 
     try{
-        std::ifstream inFile(file);
+        std::ifstream inFile(file.c_str());
         if (!inFile.is_open()) {
             std::cerr << "Input file " << file << " cannot be opened!" << std::endl;
             std::exit(1);
@@ -108,7 +109,7 @@ std::vector<Instance> getData(char* file) {
         std::string line, prefix, token;
         std::vector<std::string> vals;
         while (true) {
-            getline(inFile, line);
+            std::getline(inFile, line);
             if(inFile.fail()) {
                 break;
             }

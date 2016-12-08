@@ -6,6 +6,7 @@
 
 #include "Instance.hpp"
 #include "NNImpl.hpp"
+#include "NodeWeightPair.hpp"
 
 NNImpl::NNImpl(std::vector<Instance> trainingSet,
                int hiddenNodeCount,
@@ -17,9 +18,9 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
     NNImpl::learningRate = learningRate;
     NNImpl::maxEpoch = maxEpoch;
 
-    int inputNodeCount = NNImpl::trainingSet[0].getAttributes().size();
-    int outputNodeCount = NNImpl::trainingSet[0].getClassValues().size();
-    int i, j, k;
+    long inputNodeCount = NNImpl::trainingSet[0].getAttributes().size();
+    long outputNodeCount = NNImpl::trainingSet[0].getClassValues().size();
+    int i, j;
     for (i = 0; i < inputNodeCount; i++) {
         Node node(0);
         NNImpl::inputNodes.push_back(node);
@@ -34,7 +35,7 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
         Node node(2);
         //Connecting hidden layer nodes with input layer nodes
         for (j = 0; j < NNImpl::inputNodes.size();j++) {
-            NodeWeightPair nwp(NNImpl::inputNodes[j], hiddenWeights[i][j]);
+            NodeWeightPair nwp(&this->inputNodes[j], hiddenWeights[i][j]);
             node.addParent(nwp);
         }
         NNImpl::hiddenNodes.push_back(node);
@@ -49,7 +50,7 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
         Node node(4);
         //Connecting output layer nodes with hidden layer nodes
         for (j = 0; j < NNImpl::hiddenNodes.size(); j++) {
-            NodeWeightPair nwp(NNImpl::hiddenNodes[j], outputWeights[i][j]);
+            NodeWeightPair nwp(&NNImpl::hiddenNodes[j], outputWeights[i][j]);
             node.addParent(nwp);
         }
         NNImpl::outputNodes.push_back(node);
@@ -88,7 +89,7 @@ void NNImpl::train() {
     int i, j, k;
     Instance instance;
     for(int e = 0; e < NNImpl::maxEpoch; e++) {
-        for(int i = 0; i < NNImpl::trainingSet.size(); i++) {
+        for(i = 0; i < NNImpl::trainingSet.size(); i++) {
             instance = NNImpl::trainingSet[i];
             calculateOutputForInstance(instance);
 

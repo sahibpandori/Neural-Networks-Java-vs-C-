@@ -13,9 +13,9 @@ Node::Node(int type) {
     } else {
         Node::type = type;
     }
-    if (type == 0 || type == 1 || type == 3) {
-        Node::parents = nullptr;
-    }
+//    if (type == 0 || type == 1 || type == 3) {
+//        Node::parents.resize(0);
+//    }
     Node::inputValue = 0.0;
     Node::outputValue = 0.0;
     Node::sum = 0.0;
@@ -31,7 +31,7 @@ void Node::calculateOutput() {
     if (Node::type == 2 || Node::type == 4) {  //Hidden or Output Node
         Node::sum = 0.0;
         for (int i = 0; i < Node::parents.size(); i++) {
-            Node::sum += Node::parents[i].getWeight() * parents[i].getNode().getOutput();
+            Node::sum += Node::parents[i].getWeight() * parents[i].getNode()->getOutput();
         }
         if (sum <= 0) {
             Node::outputValue = 0.0;

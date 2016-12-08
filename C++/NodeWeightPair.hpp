@@ -5,16 +5,16 @@
 #ifndef NEURAL_NETWORKS_JAVA_VS_C_NODEWEIGHTPAIR_HPP
 #define NEURAL_NETWORKS_JAVA_VS_C_NODEWEIGHTPAIR_HPP
 
-#include "Node.hpp"
+class Node;
 
 class NodeWeightPair{
 private:
-    Node node = Node(0); //The parent node
+    Node *node; //The parent node
     double weight; //Weight of this connection
 
     // Create an object with a given parent node and connect weight
 public:
-    NodeWeightPair(Node node, double weight);
+    NodeWeightPair(Node *node, double weight);
 
     /**
      * Return thr weight of this NodeWeightPair
@@ -35,6 +35,6 @@ public:
      *
      * @return node of this NodeWeightPair
      */
-    Node getNode();
+    Node* getNode();
 };
 #endif //NEURAL_NETWORKS_JAVA_VS_C_NODEWEIGHTPAIR_HPP

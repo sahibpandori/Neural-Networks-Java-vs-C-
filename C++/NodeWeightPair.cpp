@@ -4,8 +4,8 @@
 #include "NodeWeightPair.hpp"
 //#include "Node.hpp"
 
-NodeWeightPair::NodeWeightPair(Node node, double weight)  {
-    NodeWeightPair::node = Node(node);
+NodeWeightPair::NodeWeightPair(Node *node, double weight)  {
+    NodeWeightPair::node = node;
     NodeWeightPair::weight = weight;
 }
 
@@ -17,6 +17,6 @@ void NodeWeightPair::addWeight(double weight) {
     NodeWeightPair::weight += weight;
 }
 
-Node NodeWeightPair::getNode() {
+Node* NodeWeightPair::getNode() {
     return NodeWeightPair::node;
 }
