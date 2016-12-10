@@ -2,9 +2,8 @@
  * Class to identfiy connections between different layers.
  */
 #include "NodeWeightPair.hpp"
-//#include "Node.hpp"
 
-NodeWeightPair::NodeWeightPair(Node *node, double weight)  {
+NodeWeightPair::NodeWeightPair(Node *node, double &weight)  {
     NodeWeightPair::node = node;
     NodeWeightPair::weight = weight;
 }

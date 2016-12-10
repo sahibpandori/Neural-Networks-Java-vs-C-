@@ -56,8 +56,8 @@ int main(int argc, char *argv[]) {
         std::exit(-1);
     }
 
-    NNImpl nn(trainingSet, atoi(argv[0]), learningRate,atoi(argv[2]),
-              hiddenWeights,outputWeights);
+    NNImpl nn(trainingSet, atoi(argv[1]), learningRate, atoi(argv[3]),
+              hiddenWeights, outputWeights);
     nn.train();
 
     //Reading the training set
@@ -154,13 +154,13 @@ void readWeights(std::vector<std::vector<double>> &hiddenWeights,
     int i, j;
     for (i = 0; i < hiddenWeights.size(); i++) {
         for (j = 0; j < hiddenWeights[i].size(); j++) {
-            hiddenWeights[i][j] = std::rand() * 0.01;
+            hiddenWeights[i][j] = (double) std::rand()/ (double) RAND_MAX;
         }
     }
 
     for (i = 0; i < outputWeights.size(); i++) {
         for (j = 0; j < outputWeights[i].size(); j++) {
-            outputWeights[i][j] = std::rand() * 0.01;
+            outputWeights[i][j] = (double) std::rand()/ (double) RAND_MAX;
         }
     }
 }

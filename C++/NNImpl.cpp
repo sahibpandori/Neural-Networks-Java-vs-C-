@@ -12,8 +12,8 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
                int hiddenNodeCount,
                double learningRate,
                int maxEpoch,
-               std::vector<std::vector<double>> hiddenWeights,
-               std::vector<std::vector<double>> outputWeights) {
+               std::vector<std::vector<double>> &hiddenWeights,
+               std::vector<std::vector<double>> &outputWeights) {
     NNImpl::trainingSet = trainingSet;
     NNImpl::learningRate = learningRate;
     NNImpl::maxEpoch = maxEpoch;

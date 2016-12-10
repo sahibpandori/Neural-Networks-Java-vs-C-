@@ -14,7 +14,7 @@ private:
 
     // Create an object with a given parent node and connect weight
 public:
-    NodeWeightPair(Node *node, double weight);
+    NodeWeightPair(Node *node, double &weight);
 
     /**
      * Return thr weight of this NodeWeightPair

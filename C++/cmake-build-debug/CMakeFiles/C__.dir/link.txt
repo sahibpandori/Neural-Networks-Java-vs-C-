@@ -1,0 +1,1 @@
+/usr/bin/c++.exe   -std=c++11 -g  -Wl,--enable-auto-import CMakeFiles/C__.dir/Instance.cpp.o CMakeFiles/C__.dir/NN.cpp.o CMakeFiles/C__.dir/NNImpl.cpp.o CMakeFiles/C__.dir/Node.cpp.o CMakeFiles/C__.dir/NodeWeightPair.cpp.o  -o C__.exe -Wl,--out-implib,libC__.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

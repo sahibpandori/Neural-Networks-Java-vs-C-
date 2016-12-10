@@ -13,9 +13,9 @@ Node::Node(int type) {
     } else {
         Node::type = type;
     }
-//    if (type == 0 || type == 1 || type == 3) {
-//        Node::parents.resize(0);
-//    }
+   if (type == 0 || type == 1 || type == 3) {
+       Node::parents.clear();
+   }
     Node::inputValue = 0.0;
     Node::outputValue = 0.0;
     Node::sum = 0.0;
@@ -28,7 +28,7 @@ void Node::setInput(double inputValue) {
 }
 
 void Node::calculateOutput() {
-    if (Node::type == 2 || Node::type == 4) {  //Hidden or Output Node
+    if (Node::type == 2 || Node::type == 4) {  // Hidden or Output Node
         Node::sum = 0.0;
         for (int i = 0; i < Node::parents.size(); i++) {
             Node::sum += Node::parents[i].getWeight() * parents[i].getNode()->getOutput();
@@ -38,7 +38,7 @@ void Node::calculateOutput() {
         } else {
             Node::outputValue = sum;
         }
-    } else if (Node::type == 0) {  //Input node
+    } else if (Node::type == 0) {  // Input node
         Node::outputValue = Node::inputValue;
     } else if (Node::type == 1 || Node::type == 3) {  //Bias node
         Node::outputValue = 1.0;

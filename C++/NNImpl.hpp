@@ -37,8 +37,8 @@ public:
            int hiddenNodeCount,
            double learningRate,
            int maxEpoch,
-           std::vector<std::vector<double>> hiddenWeights,
-           std::vector<std::vector<double>> outputWeights);
+           std::vector<std::vector<double>> &hiddenWeights,
+           std::vector<std::vector<double>> &outputWeights);
 
     /**
     * Get the output from the neural network for a single instance
