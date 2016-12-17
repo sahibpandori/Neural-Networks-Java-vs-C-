@@ -18,10 +18,10 @@ void Instance::addClassValue(int classValue) {
     Instance::classValues.push_back(classValue);
 }
 
-std::vector<double> Instance::getAttributes() {
+std::vector<double>& Instance::getAttributes() {
     return Instance::attributes;
 }
 
-std::vector<int> Instance::getClassValues() {
+std::vector<int>& Instance::getClassValues() {
     return Instance::classValues;
 }

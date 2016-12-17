@@ -11,52 +11,52 @@ Node::Node(int type) {
         std::cout << "Incorrect value for node type" << std::endl;
         std::exit(1);
     } else {
-        Node::type = type;
+        this->type = type;
     }
    if (type == 0 || type == 1 || type == 3) {
-       Node::parents.clear();
+       this->parents.clear();
    }
-    Node::inputValue = 0.0;
-    Node::outputValue = 0.0;
-    Node::sum = 0.0;
+    this->inputValue = 0.0;
+    this->outputValue = 0.0;
+    this->sum = 0.0;
 }
 
 void Node::setInput(double inputValue) {
-    if(Node::type == 0) {  //If input node
-        Node::inputValue = inputValue;
+    if(this->type == 0) {  //If input node
+        this->inputValue = inputValue;
     }
 }
 
 void Node::calculateOutput() {
-    if (Node::type == 2 || Node::type == 4) {  // Hidden or Output Node
-        Node::sum = 0.0;
-        for (int i = 0; i < Node::parents.size(); i++) {
-            Node::sum += Node::parents[i].getWeight() * parents[i].getNode()->getOutput();
+    if (this->type == 2 || this->type == 4) {  // Hidden or Output Node
+        this->sum = 0.0;
+        for (int i = 0; i < this->parents.size(); i++) {
+            this->sum += this->parents[i].getWeight() * parents[i].getNode()->getOutput();
         }
         if (sum <= 0) {
-            Node::outputValue = 0.0;
+            this->outputValue = 0.0;
         } else {
-            Node::outputValue = sum;
+            this->outputValue = sum;
         }
-    } else if (Node::type == 0) {  // Input node
-        Node::outputValue = Node::inputValue;
-    } else if (Node::type == 1 || Node::type == 3) {  //Bias node
-        Node::outputValue = 1.0;
+    } else if (this->type == 0) {  // Input node
+        this->outputValue = this->inputValue;
+    } else if (this->type == 1 || this->type == 3) {  //Bias node
+        this->outputValue = 1.0;
     }
 }
 
 double Node::getSum() {
-    return Node::sum;
+    return this->sum;
 }
 
 double Node::getOutput() {
-    return Node::outputValue;
+    return this->outputValue;
 }
 
-void Node::addParent(NodeWeightPair nodeWeightPair) {
-    Node::parents.push_back(nodeWeightPair);
+void Node::addParent(NodeWeightPair &nodeWeightPair) {
+    this->parents.push_back(nodeWeightPair);
 }
 
-NodeWeightPair Node::getParentAt(int index) {
-    return Node::parents[index];
+NodeWeightPair& Node::getParentAt(int index) {
+    return this->parents[index];
 }

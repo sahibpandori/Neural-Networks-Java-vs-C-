@@ -49,7 +49,7 @@ public:
     * @param instance : the instance whose output is to be calculated
     * @return the output for this instance
     */
-    int calculateOutputForInstance(Instance instance);
+    int calculateOutputForInstance(Instance &instance);
 
     /**
     * Train the neural network using the values stored in the fields

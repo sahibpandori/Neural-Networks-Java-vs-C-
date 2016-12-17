@@ -59,7 +59,7 @@ public:
     *
     * @param nodeWeightPair : the parent NodeWeightPair
     */
-    void addParent(NodeWeightPair nodeWeightPair);
+    void addParent(NodeWeightPair &nodeWeightPair);
 
     /**
     * Return the parent of this node whose index is sent as a parameter
@@ -67,6 +67,6 @@ public:
     * @param index : index of parent to be returned
     * @return the parent at the index requested
     */
-    NodeWeightPair getParentAt(int index);
+    NodeWeightPair& getParentAt(int index);
 };
 #endif //NEURAL_NETWORKS_JAVA_VS_C_NODE_HPP
