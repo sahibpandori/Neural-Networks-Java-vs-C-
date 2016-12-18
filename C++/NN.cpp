@@ -33,23 +33,21 @@ int main(int argc, char *argv[]) {
     //Reading the weights
     std::vector<std::vector<double>> hiddenWeights;
     hiddenWeights.resize((unsigned) std::atoi(argv[1]));
+
     for(int i = 0; i < hiddenWeights.size(); i++) {
-        hiddenWeights[i].resize(trainingSet[0].getAttributes().size()+1);
+        hiddenWeights[i].resize(trainingSet[0].attributes.size() + 1);
     }
 
     std::vector<std::vector<double>> outputWeights;
-    outputWeights.resize(trainingSet[0].getClassValues().size());
+    outputWeights.resize(trainingSet[0].classValues.size());
+
     for (int i = 0; i < outputWeights.size(); i++) {
         outputWeights[i].resize(hiddenWeights.size() + 1);
     }
 
     readWeights(hiddenWeights,outputWeights);
 
-    std::istringstream ss(argv[2]);
-    double learningRate;
-    ss >> learningRate;
-
-    std::cout << learningRate << std::endl;
+    double learningRate = std::stod(argv[2]);
 
     if (learningRate > 1 || learningRate <= 0) {
         std::cout << "Incorrect value for learning rate" << std::endl;
@@ -71,8 +69,8 @@ int main(int argc, char *argv[]) {
         //Getting output from network
         outputs[i] = nn.calculateOutputForInstance(testSet[i]);
         int actual_idx =- 1;
-        for (int j = 0; j < testSet[i].getClassValues().size(); j++) {
-            if (testSet[i].getClassValues()[j] > 0.5) {
+        for (int j = 0; j < testSet[i].classValues.size(); j++) {
+            if (testSet[i].classValues[j] > 0.5) {
                 actual_idx = j;
             }
         }
@@ -131,10 +129,10 @@ std::vector<Instance> getData(std::string file) {
 
                 Instance instance;
                 for (int i = 0; i < attributeCount; i++) {
-                    instance.addAttribute(std::stod(vals[i]));
+                    instance.attributes.push_back(std::stod(vals[i]));
                 }
                 for (int i=attributeCount; i < vals.size(); i++) {
-                    instance.addClassValue(std::stoi(vals[i]));
+                    instance.classValues.push_back(std::stoi(vals[i]));
                 }
                 data.push_back(instance);
             }
@@ -154,13 +152,13 @@ void readWeights(std::vector<std::vector<double>> &hiddenWeights,
     int i, j;
     for (i = 0; i < hiddenWeights.size(); i++) {
         for (j = 0; j < hiddenWeights[i].size(); j++) {
-            hiddenWeights[i][j] = (double) std::rand()/ (double) RAND_MAX;
+            hiddenWeights[i][j] = (double) std::rand() * 0.01 / (double) RAND_MAX;
         }
     }
 
     for (i = 0; i < outputWeights.size(); i++) {
         for (j = 0; j < outputWeights[i].size(); j++) {
-            outputWeights[i][j] = (double) std::rand()/ (double) RAND_MAX;
+            outputWeights[i][j] = (double) std::rand() * 0.01 / (double) RAND_MAX;
         }
     }
 }

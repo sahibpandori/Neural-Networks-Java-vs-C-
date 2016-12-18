@@ -18,8 +18,8 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
     this->learningRate = learningRate;
     this->maxEpoch = maxEpoch;
 
-    long inputNodeCount = this->trainingSet[0].getAttributes().size();
-    long outputNodeCount = this->trainingSet[0].getClassValues().size();
+    long inputNodeCount = this->trainingSet[0].attributes.size();
+    long outputNodeCount = this->trainingSet[0].classValues.size();
     int i, j;
     for (i = 0; i < inputNodeCount; i++) {
         Node node(0);
@@ -36,7 +36,7 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
         //Connecting hidden layer nodes with input layer nodes
         for (j = 0; j < this->inputNodes.size(); j++) {
             NodeWeightPair nwp(&this->inputNodes[j], hiddenWeights[i][j]);
-            node.addParent(nwp);
+            node.parents.push_back(nwp);
         }
         this->hiddenNodes.push_back(node);
     }
@@ -51,7 +51,7 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
         //Connecting output layer nodes with hidden layer nodes
         for (j = 0; j < this->hiddenNodes.size(); j++) {
             NodeWeightPair nwp(&this->hiddenNodes[j], outputWeights[i][j]);
-            node.addParent(nwp);
+            node.parents.push_back(nwp);
         }
         this->outputNodes.push_back(node);
     }
@@ -59,10 +59,10 @@ NNImpl::NNImpl(std::vector<Instance> trainingSet,
 
 int NNImpl::calculateOutputForInstance(Instance &instance) {
     int i;
-    for (i = 0; i < instance.getAttributes().size(); i++) {
-        this->inputNodes[i].setInput(instance.getAttributes()[i]);
+    for (i = 0; i < instance.attributes.size(); i++) {
+        this->inputNodes[i].setInput(instance.attributes[i]);
     }
-    this->inputNodes[instance.getAttributes().size()].setInput(1.0);
+    this->inputNodes[instance.attributes.size()].setInput(1.0);
 
     for (i = 0; i < this->hiddenNodes.size(); i++) {
         this->hiddenNodes[i].calculateOutput();
@@ -100,7 +100,7 @@ void NNImpl::train() {
 
             for (j = 0; j < outputNodes.size(); j++) {
                 if(this->outputNodes[j].getSum() >= 0) {
-                    error[j] = (instance.getClassValues()[j] -
+                    error[j] = (instance.classValues[j] -
                                 this->outputNodes[j].getOutput());// * outputNodes.get(j).getSum();
                 } else {
                     error[j] = 0;
@@ -125,7 +125,7 @@ void NNImpl::train() {
                     double sigma = 0.0;
                     for (k = 0; k < this->outputNodes.size(); k++) {
                         if (this->outputNodes[k].getSum() > 0) {
-                            sigma += this->outputNodes[k].getParentAt(j).getWeight() * error[k];
+                            sigma += this->outputNodes[k].parents[j].weight * error[k];
                         }
                     }
 
@@ -141,13 +141,13 @@ void NNImpl::train() {
             //Updating all the weights
             for (j  = 0; j < this->hiddenNodes.size(); j++) {
                 for (k = 0; k < this->outputNodes.size(); k++) {
-                    this->outputNodes[k].getParentAt(j).addWeight(errorOutput[j][k]);
+                    this->outputNodes[k].parents[j].weight += errorOutput[j][k];
                 }
             }
 
             for (j = 0; j < this->inputNodes.size(); j++) {
                 for (k = 0; k < this->hiddenNodes.size() - 1; k++) {
-                    this->hiddenNodes[k].getParentAt(j).addWeight(errorHidden[j][k]);
+                    this->hiddenNodes[k].parents[j].weight += errorHidden[j][k];
                 }
             }
         }

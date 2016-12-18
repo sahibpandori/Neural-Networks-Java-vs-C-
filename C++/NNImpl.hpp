@@ -1,7 +1,3 @@
-//
-// Created by Haylee on 11/13/2016.
-//
-
 #ifndef NEURAL_NETWORKS_JAVA_VS_C_NNIMPL_HPP
 #define NEURAL_NETWORKS_JAVA_VS_C_NNIMPL_HPP
 
